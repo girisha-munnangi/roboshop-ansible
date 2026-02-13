@@ -34,7 +34,7 @@
       dest: /app
       remote_src: yes
   
-  - name : installing dependency packages 
+  - name : moving shipping jar file  
     ansible.builtin.command: mv target/shipping-1.0.jar shipping.jar
     args:
       chdir : /app
