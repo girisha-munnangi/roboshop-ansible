@@ -70,7 +70,7 @@
 
     - name: start and enable shipping
       ansible.builtin.service:
-      state: restarted
-      name: shipping
-      enabled: yes
+        state: restarted
+        name: shipping
+        enabled: yes
 
