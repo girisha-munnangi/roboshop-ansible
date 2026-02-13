@@ -23,4 +23,28 @@
       path: /app
       state: directory
 
-  - name: 
+  - name: downloading code
+    ansible.builtin.get_url:
+      url: https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip
+      dest: /tmp/user.zip
+
+  - name: unzip the code
+    ansible.builtin.unarchive:
+      src: /tmp/user.zip
+      dest: /app
+      remote_src: yes
+
+  - name: installing dependencies
+    community.general.npm:
+      src: /app
+      
+  - name: copy user service
+    ansible.builtin.copy:
+      src: user.service
+      dest: /etc/systemd/system/user.service
+
+  - name: restarting service
+    ansible.builtin.service:
+      name: user
+      state: restarted
+      enabled: yes
