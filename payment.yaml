@@ -49,5 +49,6 @@
   
   - name: restarting payment service
     ansible.builtin.service:
+      name: payment
       state: restarted
       enabled: yes
