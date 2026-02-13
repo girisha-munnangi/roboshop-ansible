@@ -3,9 +3,16 @@
   become: yes
   tasks:
   - name : enabling nginx
-    ansible.builtin.package:
-      name: 
-
+    ansible.builtin.command: dnf module enable nodejs:1.24 -y 
+    
   - name : installing nginx
     ansible.builtin.package:
-      name:
+      name: nodejs
+      state: present
+
+  - name : remove entire html directory
+    ansible.builtin.file:
+      path: /usr/share/nginx/html
+      state: absent
+  - name: 
+  

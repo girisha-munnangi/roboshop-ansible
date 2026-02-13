@@ -33,6 +33,11 @@
       src: /tmp/shipping.zip
       dest: /app
       remote_src: yes
+
+  - name: installing dependent packages
+    ansible.builtin.command: mvn clean package
+    args: 
+      chdir: /app
   
   - name : moving shipping jar file  
     ansible.builtin.command: mv target/shipping-1.0.jar shipping.jar
