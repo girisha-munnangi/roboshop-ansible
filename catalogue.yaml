@@ -25,8 +25,8 @@
   
   - name: downloading code
     ansible.builtin.get_url:
-    src: https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip
-    dest: /tmp/catalogue.zip
+     src: https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip
+     dest: /tmp/catalogue.zip
   
   - name: unzip the code
     ansible.builtin.unarchive:
@@ -56,16 +56,19 @@
   - name: check products loaded
     ansible.builtin.command: mongosh --host "{{ MONGODB_HOST }}" --quiet  --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
     register: calalogue_output
-    
+
   - name: print products loaded
     ansible.builtin.debug:
       msg: "{{ catalogue_output }}"  
+
   - name: loading master data
     ansible.builtin.shell: mongosh --host MONGODB_HOST </app/db/master-data.js
     when: catalogue_output.stdout | int < 0 
+
   - name: deamon reload
     ansible.builtin.systemd_service:
       daemon_reload: true
+
   - name: restarting the service
     ansible.builtin.service:
     name: catalogue
